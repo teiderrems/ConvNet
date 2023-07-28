@@ -36,10 +36,10 @@ int main(int argc, char* argv[])
 
     if(argc==5)
     {
-	epoch = atoi(argv[1]);
+	    epoch = atoi(argv[1]);
     	alpha = atof(argv[2]);
-	nbImgPos = atoi(argv[3]);
-	nbImgNeg = atoi(argv[4]); 
+	    nbImgPos = atoi(argv[3]);
+	    nbImgNeg = atoi(argv[4]); 
     }
     else
     {
@@ -82,7 +82,6 @@ int main(int argc, char* argv[])
     for (int i = 0; i < n; i++) {
         Conv3D* temp = new Conv3D(filters[i], biais[i]);
         convs[i] = temp;
-        
     }
 
 
@@ -94,7 +93,7 @@ int main(int argc, char* argv[])
     vector<vector<double>> biaisfc = Util::readAllBiaisfc(file, nblfc);
 
 
-    cout << biaisfc.size() << endl;
+    
 
     Layer* lt = new Layer(W[0], biaisfc[0]);
     Layer* lt1 = new Layer(W[1], biaisfc[1]);
@@ -112,6 +111,7 @@ int main(int argc, char* argv[])
     positif.resize(30);
     for (int i = 0; i < 30; i++) {
         string filename = "images/pos/p" + to_string(i) + ".ppm";
+        cout << filename << endl;
         positif[i] = Util::LoadImage(filename);
     }
 
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
     negatif.resize(30);
     for (int i = 0; i < 30; i++) {
         string filename = "images/neg/n" + to_string(i) + ".ppm";
-        
+        cout << filename << endl;
         negatif[i] = Util::LoadImage(filename);
     }
 

@@ -16,6 +16,7 @@ namespace cpr {
 	public:
 		Neurone(double);
 		Neurone(){}
+		Neurone(vector<double>& w, double b) :Weight{ w }, b{b} {}
 		void setWeight(vector<double>& w) {
 			this->Weight = w;
 		}
