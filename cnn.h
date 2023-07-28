@@ -39,7 +39,7 @@ namespace cpr {
         ~CNN();
 
         CNN(const vector<Conv3D*>& conv, const vector<Pooling*>& pool,FullConnected *fc,Norm type=Z_score)
-            : conv(conv), pool(pool), fc(fc)
+            : conv(conv), pool(pool), fc(fc),type(type)
         {
         }
     };
