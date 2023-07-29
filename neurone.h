@@ -16,7 +16,7 @@ namespace cpr {
 	public:
 		Neurone(double);
 		Neurone(){}
-		Neurone(vector<double>& w, double b) :Weight{ w }, b{b} {}
+		Neurone(vector<double>& w, double b) :Weight(w), b(b) {}
 		void setWeight(vector<double>& w) {
 			this->Weight = w;
 		}
@@ -49,9 +49,7 @@ namespace cpr {
 		double getAgrega() {
 			return this->agrega;
 		}
-		/*Neurone() {
-			this->Weight.resize(0);
-		}*/
+		
 
 		void updateWeight(vector<double>&,double);
 		void updateBiais(double,double);

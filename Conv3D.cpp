@@ -7,7 +7,7 @@ using namespace cpr;
 ImageGray cpr::Conv3D::convolutionOneImageOneFilter(Image& img, double b)
 {
 
-	//cout << "begin convolutionOneImageOneFilter " <<img.p.size()<< endl;
+	
 		int height = (1 + (img.p[0].size() - this->filter.height) / this->stride);
 	    int width = (1 + (img.p.size() - this->filter.width ) / this->stride);
 	    this->height=height;
@@ -71,7 +71,7 @@ ImageGray cpr::Conv3D::convolutionOneImageOneFilter(Image& img, double b)
 				}
 			}
 		}
-		//cout << "end convolutionOneImageOneFilter" << endl;
+		
 	    return Util::addImageCanaux(currentI);
 }
 
@@ -80,13 +80,13 @@ Image cpr::Conv3D::convolutionOnImageManyFilter(Image& img)
 
 	vector<ImageGray> res;
 	res.resize(this->filters.size());
-	//this->image = Util::normalize(img);
+	
 	this->image = img;
 
-	//cout << "begin convolutionOnImageManyFilter" << endl;
+	
 	for (int i = 0; i < this->filters.size(); i++)
 	{
-		//cout << "biais =>" << this->biais[i] << endl;
+		
 		this->filter = this->filters[i];
 		res[i] = this->convolutionOneImageOneFilter(img, this->biais[i]);
 	}
@@ -188,7 +188,6 @@ void cpr::Conv3D::saveFilter(int i)
 
 void cpr::Conv3D::backpropagationInputLayer(vector<Image>& d, double alpha)
 {
-	//cout << "begin backpropagationManyFilter void" << endl;
 	vector<Image> dy = this->dxManyFilter(d);
 	this->updateBiaisOutputLayer(dy, alpha);
 	vector<Image> dw = this->dwOutUpLayer(dy);
@@ -217,20 +216,20 @@ void cpr::Conv3D::backpropagationInputLayer(vector<Image>& d, double alpha)
 		}
 	}
 	vector<Image>().swap(dy);
-	//cout << "end backpropagationManyFilter void" << endl;
+	
 	vector<Image>().swap(dy);
 }
 
 vector<Image> cpr::Conv3D::backpropagationInterLayers(vector<Image>& d, double alpha)
 {
 
-	//cout << "begin backpropagationManyFilters" << endl;
+	
 	vector<Image> dy = this->dxManyFilter(d);
 	this->updateBiaisOutputLayer(dy, alpha);
 	vector<Image> dw = this->dwOutUpLayer(dy);
 	this->updateFilterOutputLayer(dw, alpha);
 
-	//this->updateManyFilter(dy, alpha);
+	
 	for (auto& i : dw)
 	{
 		for (auto& j : i.p)
@@ -242,7 +241,7 @@ vector<Image> cpr::Conv3D::backpropagationInterLayers(vector<Image>& d, double a
 		}
 	}
 	vector<Image>().swap(dw);
-	//cout << "end backpropagationManyFilters" << endl;
+	
 	return dy;
 }
 
@@ -270,7 +269,7 @@ vector<Image> cpr::Conv3D::backpropagationOutputLayer(Image& dy, double alpha)
 
 vector<Image> cpr::Conv3D::dxOutUpLayer(Image& dy)
 {
-	//cout << "begin dxOutUpLayer" << endl;
+	
 
 	vector<Image> res;
 	vector<Image> f;
@@ -305,14 +304,14 @@ vector<Image> cpr::Conv3D::dxOutUpLayer(Image& dy)
 	}
 	vector<Image>().swap(f);
 
-	//cout << "end dxOutUpLayer" << endl;
+	
 
 	return res;
 }
 
 vector<Image> cpr::Conv3D::dwOutUpLayer(vector<Image>& dx)
 {
-	//cout << "begin dwOutUpLayer" << endl;
+	
 
 	vector<Image> dwO;
 	dwO.resize(this->filters.size());
@@ -329,14 +328,14 @@ vector<Image> cpr::Conv3D::dwOutUpLayer(vector<Image>& dx)
 		}
 		vector<Pixel>().swap(i);
 	}
-	//cout << "end dwOutUpLayer" << endl;
+	
 
 	return dwO;
 }
 
 vector<Image>cpr::Conv3D::dxManyFilter(vector<Image>& dy)
 {
-	//cout << "begin dxManyFilter" << endl;
+	
 
 	vector<Image>res;
 	res.resize(this->filters.size());
@@ -357,14 +356,14 @@ vector<Image>cpr::Conv3D::dxManyFilter(vector<Image>& dy)
 		res[i] = this->dxHelper(f[i], dy);
 
 	}
-	//cout << "end dxManyFilter" << endl;
+	
 	return res;
 }
 
 Image cpr::Conv3D::dxHelper(Image& f, vector<Image>& dy)
 {
 
-	//cout << "begin dxHelper" << endl;
+	
 
 	vector<Image> res;
 	res.resize(dy.size());
@@ -372,7 +371,7 @@ Image cpr::Conv3D::dxHelper(Image& f, vector<Image>& dy)
 	{
 		res[i] = Util::convolutionImageFilter(dy[i], f);
 	}
-	//cout << "end dxHelper" << endl;
+	
 
 	return Util::addImage(res);
 }

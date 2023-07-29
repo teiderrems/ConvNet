@@ -962,6 +962,17 @@ namespace cpr {
             }
             return temp;
         }
+
+        static double accurency(vector<int>& y, vector<int>& yp) {
+            int vp = 0;
+            for (int i = 0; i < y.size(); i++)
+            {
+                if (y[i] == yp[i]) {
+                    vp+=1;
+                }
+            }
+            return(vp / y.size()) * 100;
+        }
     };
 }
 

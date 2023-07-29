@@ -43,6 +43,7 @@ double cpr::Neurone::gradient(vector<double>& dw, vector<double>& delta)
 	}
 	double grad = (cpr::Util::sigmoidPrime(this->agrega) * som);
 	cout << "grad :" << grad << endl;
+	cout << endl;
 	return grad;
 }
 
@@ -96,9 +97,11 @@ void cpr::Neurone::updateWeight(vector<double>& dw, double alpha)
 
 void cpr::Neurone::updateBiais(double delta, double alpha)
 {
-	//cout << "Biais-fc before update:" << this->b << endl;
+	cout << endl;
+	cout << "Biais-fc before update:" << this->b << endl;
 	double temp;
 	temp=this->b - alpha * delta;
 	this->setBiais(temp);
-	//cout << "Biais-fc after update:" << this->b << endl;
+	cout << "Biais-fc after update:" << this->b << endl;
+	cout << endl;
 }

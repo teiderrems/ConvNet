@@ -100,7 +100,7 @@ Pixel Pooling::averagePixel(vector<vector<Pixel>>& p) {
  /// <returns></returns>
  Image Pooling::maxPoolingOneImage(Image& I) {
 
-     cout << "beging maxPoolingOneImage" << endl;
+     
      Image image;
      int width = 1 + ((I.width - this->dim) / this->s);
      int height = 1 + ((I.height - this->dim) / this->s);
@@ -130,16 +130,9 @@ Pixel Pooling::averagePixel(vector<vector<Pixel>>& p) {
                  }
              }
              image.p[i][j] = this->maxPixel(V);
-             if (i > 730 && j > 730) {
-                 for (auto& c : image.p[i][j].pixel)
-                 {
-                     cout << c << "\t";
-                 }
-                 cout << endl;
-             }
          }
      }
-     cout << "end maxPoolingOneImage" << endl;
+    
      return image;
  }
 

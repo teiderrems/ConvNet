@@ -22,8 +22,8 @@ namespace cpr {
 			this->neurones.resize(n);
 			for (int i = 0; i < n; i++)
 			{
-				this->neurones[i] = new Neurone(this->biais[i]);
-                //this->neurones[i]->setBiais(this->biais[i]);
+				this->neurones[i] = new Neurone();
+               this->neurones[i]->setBiais(this->biais[i]);
 			}
 		}
 
@@ -41,9 +41,9 @@ namespace cpr {
             for (int i = 0; i < this->neurones.size(); i++)
             {
 
-				this->neurones[i] = new Neurone(this->Weight[i], this->biais[i]);
-                /*this->neurones[i]->setWeight(this->Weight[i]);
-                this->neurones[i]->setBiais(this->biais[i]);*/
+				this->neurones[i] = new Neurone();
+                this->neurones[i]->setWeight(this->Weight[i]);
+                this->neurones[i]->setBiais(this->biais[i]);
             }
 		}
 		//void backward(Input&);
@@ -52,10 +52,6 @@ namespace cpr {
 		void saveWeight(int);
 		void saveBiais(int);
         ~Layer() {
-//            vector<vector<double>>().swap(this->Weight);
-//            vector<double>().swap(this->agregas);
-//            vector<Neurone>().swap(this->neurones);
-//            vector<double>().swap(this->biais);
         }
 	};
 }

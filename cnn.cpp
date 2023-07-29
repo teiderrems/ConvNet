@@ -15,15 +15,22 @@ CNN::CNN(const vector<Conv3D*> c, const vector<Pooling*> p) {
 
 
 
-double cpr::CNN::predict(Image& image)
+int cpr::CNN::predict(Image& image)
 {
     Image currentImage = this->helper(image);
-    
-    
-    vector<vector<Pixel>>().swap(image.p);
-    
     Input currentInput = Util::flatten(currentImage);
+    currentInput.x = this->type != Z_score ? Util::NormalisationMinMax(currentInput.x) : Util::normalisation(currentInput.x);
+    cout << endl;
 
+    for (int i = 0; i < 20; i++)
+    {
+        cout << currentInput.x[i] << "\t";
+    }
+
+    cout << endl;
+
+    
+    double val=this->fc->forward(currentInput);
     for (auto& i : currentImage.p)
     {
         for (auto& j : i)
@@ -36,15 +43,11 @@ double cpr::CNN::predict(Image& image)
     {
         vector<Pixel>().swap(i);
     }
-    cout<<currentInput.x.size()<<endl;
-
-    
-    double val=this->fc->forward(currentInput);
-    return val;
+    return val>= 0.593857?1:0;
 }
-vector<double> cpr::CNN::test(vector<Image>& images)
+vector<int> cpr::CNN::test(vector<Image>& images)
 {
-    vector<double> res;
+    vector<int> res;
     res.resize(images.size());
     for (int i = 0; i < images.size(); i++)
     {

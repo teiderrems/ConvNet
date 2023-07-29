@@ -31,8 +31,8 @@ namespace cpr {
         CNN(const vector<Conv3D*>, const vector<Pooling*>);
         void fit(vector<Image>&, int, double learning_rate = 0.005);
         void preFit(Image&, double);
-        double predict(Image&);
-        vector<double> test(vector<Image>&);
+        int predict(Image&);
+        vector<int> test(vector<Image>&);
         Image helper(Image&);
         Image convertVectorToImage(vector<double>&,int);
         void save();

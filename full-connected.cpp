@@ -69,8 +69,7 @@ vector<double> cpr::FullConnected::backward(cpr::Input& I,double alpha)
     vector<double>().swap(temp);
     vector<double>().swap(A);
     vector<double>().swap(dw);
-//    this->layers.push_back(this->output);
-//    vector<Layer>().swap(this->layers);
+
 	return del;
 }
 
@@ -86,5 +85,5 @@ void cpr::FullConnected::save()
 }
 
 cpr::FullConnected::~FullConnected(){
-//    vector<Layer>().swap(this->layers);
+
 }

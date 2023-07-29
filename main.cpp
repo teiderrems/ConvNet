@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     Util u;
      
    
-    int epoch, nbImgPos,nbImgNeg;
+    /*int epoch, nbImgPos,nbImgNeg;
     float alpha;
 
 
@@ -45,11 +45,11 @@ int main(int argc, char* argv[])
     {
        cout<<"Nombre de paramètres insuffisant\n Usagr: ./med_vir epoch alpha nbImgPos nbImgNeg\n";	 
     }
-    Conv3D* c = new Conv3D(5,3);
-    Conv3D* c1 = new Conv3D(5, 3,3);
-    Conv3D* c2 = new Conv3D(3, 3,3);
-    /*Conv3D* c3 = new Conv3D(3, 1);*/
-    Pooling* p = new Pooling(2,AveragePooling);
+    Conv3D* c = new Conv3D(3,3);
+    Conv3D* c1 = new Conv3D(3, 3,3);
+    Conv3D* c2 = new Conv3D(3, 2,3);
+    Conv3D* c3 = new Conv3D(3, 1,2);
+    Pooling* p = new Pooling(2,MaxPooling);
 
    vector<Conv3D*> conv{c,c1,c2};
    Layer* l = new Layer(27);
@@ -67,12 +67,14 @@ int main(int argc, char* argv[])
 
     vector<Image> shuffleImg = Util::shuffleImges("images/", nbImgPos, nbImgNeg);
 
-    cnn->fit(shuffleImg, epoch, alpha);
+    cnn->fit(shuffleImg, epoch, alpha);*/
 
-
+    //Pooling* p = new Pooling(2, AveragePooling);
     string filename = "cpr/";
+    Pooling* p = new Pooling(2, MaxPooling);
+
     int n = 3;
-    vector<int>lenght{3, 3, 3};
+    vector<int>lenght{3, 3, 2};
     vector<vector<Image>> filters = Util::readAllFilter(filename, n, lenght);
 
     vector<vector<double>> biais = Util::readAllBiais(filename, n);
@@ -108,8 +110,8 @@ int main(int argc, char* argv[])
     CNN* cnnT = new CNN(convs, { p,p,p }, fconT);
 
     vector<Image> positif;
-    positif.resize(30);
-    for (int i = 0; i < 30; i++) {
+    positif.resize(7);
+    for (int i = 0; i < 7; i++) {
         string filename = "images/pos/p" + to_string(i) + ".ppm";
         cout << filename << endl;
         positif[i] = Util::LoadImage(filename);
@@ -117,32 +119,39 @@ int main(int argc, char* argv[])
 
 
     vector<Image> negatif;
-    negatif.resize(30);
-    for (int i = 0; i < 30; i++) {
+    negatif.resize(7);
+    for (int i = 0; i < 7; i++) {
         string filename = "images/neg/n" + to_string(i) + ".ppm";
         cout << filename << endl;
         negatif[i] = Util::LoadImage(filename);
     }
-
+    vector<int> y;
+    vector<int> yp;
     cout << "Resultat des positifs" << endl;
 
-    vector<double> resPos = cnnT->test(positif);
+    vector<int> resPos = cnnT->test(positif);
     for (auto& i : resPos) {
         cout << i << "\t";
+        y.push_back(1);
+        yp.push_back(i);
     }
     cout << endl;
     cout << endl;
     cout <<"Resultat des négatifs"<< endl;
-    vector<double> resNeg = cnnT->test(negatif);
+    vector<int> resNeg = cnnT->test(negatif);
     for (auto& i : resNeg) {
         cout << i << "\t";
+        y.push_back(0);
+        yp.push_back(i);
     }
     cout << endl;
-    vector<Layer*>().swap(layers);
+    cout <<"Accurency = " << Util::accurency(y, yp) << endl;
+    cout << endl;
+    //vector<Layer*>().swap(layers);
     vector<Layer*>().swap(layersT);
-    vector<Image>().swap(shuffleImg);
+    /*vector<Image>().swap(shuffleImg);*/
     vector<Conv3D*>().swap(convs);
-    vector<Conv3D*>().swap(conv);
+    //vector<Conv3D*>().swap(conv);
     cout << "compilation éffectuer avec success." << endl;
-    delete l,l1,l2,c,c1,c2,cnn, fcon,output, p , lt,lt1,lt2, outputT, fconT, cnnT;//c1,c2,c,,l,l1,l2, output, cnn,fcon
+    delete p , lt,lt1,lt2, outputT, fconT, cnnT;//c1, c2, c,  l, l1, l2, output, cnn, fcon, c,c1,c2,cnn, fcon,output,
 }                                       
